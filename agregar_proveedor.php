@@ -4,14 +4,14 @@ include_once  "BD/conexionMYSQLI.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") 
 {
     $Nombre = $_POST['nombre'];
-    $Telefono = $_POST['telefono'];
     $Direccion = $_POST['direccion'];
-    $Correo = $_POST['correo'];
+    $Contacto = $_POST['contacto'];
+    
 
 
-    if (!empty($Nombre) && !empty($Telefono) && !empty($Direccion) && !empty($Correo)) {
+    if (!empty($Nombre) && !empty($Direccion) && !empty($Contacto)) {
         
-        $consulta = "INSERT INTO proveedor (nombre, telefono, direccion, correo) VALUES ('$Nombre', '$Telefono', '$Direccion', '$Correo')";
+        $consulta = "INSERT INTO proveedor (nombre, direccion, persona_contacto) VALUES ('$Nombre', '$Direccion', '$Contacto')";
         
         if ($enlace->query($consulta) === TRUE) {
             $mensaje = "Proveedor insertado correctamente";
@@ -61,9 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon">
-                    <i class="bi bi-shop"></i>
+                    <img src="img/chair.png" alt="..." style="width: 40px; height: 40px;">
                 </div>
-                <div class="sidebar-brand-text mx-3">Sabores & delicias </div>
+                <div class="sidebar-brand-text mx-3">PRONTOMUEBLE</div>
             </a>
 
             <!-- Divider -->
@@ -163,8 +163,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
             <!-- Sidebar Message -->
             <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="img/shop.svg" alt="...">
-                <p class="text-center mb-2"><strong>Sabores & delicias</strong>, Frescura y sabor en cada empaque</p>
+                <img class="sidebar-card-illustration mb-2" src="img/chair.png" alt="...">
+                <p class="text-center mb-2"><strong>PRONTOMUEBLE</strong>, Diseño y comodidad para cada rincón de tu hogar</p>
                 
             </div>
 
@@ -281,17 +281,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                         <input type="text" class="form-control" id="nombre" name="nombre" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="telefono" class="col-form-label">Telefono:</label>
-                                        <input type="number" class="form-control" id="telefono" name="telefono" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="direccion" class="col-form-label">Direccion:</label>
+                                        <label for="telefono" class="col-form-label">Dirección:</label>
                                         <input type="text" class="form-control" id="direccion" name="direccion" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="correo" class="col-form-label">Correo:</label>
-                                        <input type="email" class="form-control" id="correo" name="correo" required>
+                                        <label for="direccion" class="col-form-label">Persona de contacto:</label>
+                                        <input type="text" class="form-control" id="contacto" name="contacto" required>
                                     </div>
+                                    
                                     <div class="d-flex justify-content-end">
                                         <button type="reset" class="btn btn-secondary mr-2">Restablecer</button>
                                         <button type="submit" id="btnGuardar" class="btn btn-success" name="enviar">Guardar</button>

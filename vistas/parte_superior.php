@@ -37,7 +37,6 @@
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon">
                     <img src="img/chair.png" alt="..." style="width: 40px; height: 40px;">
-                    
                 </div>
                 <div class="sidebar-brand-text mx-3">PRONTOMUEBLE </div>
             </a>
