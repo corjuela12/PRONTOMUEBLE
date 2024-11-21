@@ -34,11 +34,11 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="inicio.php">
                 <div class="sidebar-brand-icon">
                     <img src="img/chair.png" alt="..." style="width: 40px; height: 40px;">
                 </div>
-                <div class="sidebar-brand-text mx-3">PRONTOMUEBLE </div>
+                <div class="sidebar-brand-text mx-3">PRONTOMUEBLE</div>
             </a>
 
             <!-- Divider -->
@@ -46,7 +46,7 @@
 
             <!-- Nav Item - HOME -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.php">
+                <a class="nav-link" href="inicio.php">
                 <i class="bi bi-house-door"></i>
                     <span>HOME</span></a>
             </li>
@@ -292,6 +292,8 @@
 
                 </nav>
                 <!-- End of Topbar -->
+                 
+                <!-- Begin Page Content -->
 
 
 

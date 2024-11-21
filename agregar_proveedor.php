@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="inicio.php">
                 <div class="sidebar-brand-icon">
                     <img src="img/chair.png" alt="..." style="width: 40px; height: 40px;">
                 </div>
@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
             <!-- Nav Item - HOME -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.php">
+                <a class="nav-link" href="inicio.php">
                 <i class="bi bi-house-door"></i>
                     <span>HOME</span></a>
             </li>
@@ -237,15 +237,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                     src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <!--<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    Perfil
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
+                                    Configuración
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -254,9 +254,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Salir
                                 </a>
-                            </div>-->
+                            </div>
                         </li>
 
                     </ul>
@@ -277,7 +277,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                                 </div>
                                 <form id="formProductos" action="" method="post" class="card-body">
                                     <div class="form-group">
-                                        <label for="nombre" class="col-form-label">Nombre:</label>
+                                        <label for="nombre" class="col-form-label">Nombre de la empresa:</label>
                                         <input type="text" class="form-control" id="nombre" name="nombre" required>
                                     </div>
                                     <div class="form-group">
@@ -338,15 +338,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Listo para salir?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Selecciona salir para cerrar sesion</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="login.php">Salir</a>
                 </div>
             </div>
         </div>

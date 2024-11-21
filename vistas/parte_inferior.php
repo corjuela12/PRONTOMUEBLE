@@ -1,4 +1,4 @@
-</div>
+            </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
@@ -35,7 +35,7 @@
                 </div>
                 <div class="modal-body">Selecciona salir para cerrar sesion</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
                     <a class="btn btn-primary" href="login.php">Salir</a>
                 </div>
             </div>

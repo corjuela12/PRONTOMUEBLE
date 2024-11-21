@@ -1,12 +1,23 @@
 <?php
-include_once  "BD/conexionPDO.php";
+/*include_once  "BD/conexionPDO.php";
 $objeto = new Conexion();
 $conexion = $objeto->Conectar();
 
-$consulta = "SELECT id_proveedor, nombre, telefono, direccion, correo FROM proveedor";
+$consulta = "SELECT id_proveedor, nombre, direccion, persona_contacto FROM proveedor";
 $resultado = $conexion->prepare($consulta);
 $resultado->execute();
-$data=$resultado->fetchAll(PDO::FETCH_ASSOC);
+$data=$resultado->fetchAll(PDO::FETCH_ASSOC);*/
+
+include_once  "BD/conexionMYSQLI.php";
+$consulta = "SELECT id_proveedor, nombre, direccion, persona_contacto FROM proveedor";
+$resultado = $enlace->query($consulta);
+
+$data = array();
+if ($resultado->num_rows > 0) {
+    while ($fila = $resultado->fetch_assoc()) {
+        $data[] = $fila;
+    }
+}
 
 ?>
 
@@ -47,11 +58,11 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="inicio.php">
                 <div class="sidebar-brand-icon">
-                    <i class="bi bi-shop"></i>
+                    <img src="img/chair.png" alt="..." style="width: 40px; height: 40px;">
                 </div>
-                <div class="sidebar-brand-text mx-3">Sabores & delicias </div>
+                <div class="sidebar-brand-text mx-3">PRONTOMUEBLE</div>
             </a>
 
             <!-- Divider -->
@@ -59,7 +70,7 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
             <!-- Nav Item - HOME -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.php">
+                <a class="nav-link" href="inicio.php">
                 <i class="bi bi-house-door"></i>
                     <span>HOME</span></a>
             </li>
@@ -151,8 +162,8 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
             <!-- Sidebar Message -->
             <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="img/shop.svg" alt="...">
-                <p class="text-center mb-2"><strong>Sabores & delicias</strong>, Frescura y sabor en cada empaque</p>
+                <img class="sidebar-card-illustration mb-2" src="img/chair.png" alt="...">
+                <p class="text-center mb-2"><strong>PRONTOMUEBLE</strong>, Diseño y comodidad para cada rincón de tu hogar</p>
                 
             </div>
 
@@ -225,15 +236,15 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                     src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <!--<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    Perfil
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
+                                    Configuración
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -242,9 +253,9 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Salir
                                 </a>
-                            </div>-->
+                            </div>
                         </li>
 
                     </ul>
@@ -270,24 +281,19 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                     <thead class="text-center">
                                         <tr>
                                             <th>Id Proveedor</th>
-                                            <th>Nombre</th>
-                                            <th>Telefono</th>
-                                            <th>Direccion</th>
-                                            <th>Correo</th>
+                                            <th>Nombre de la empresa</th>
+                                            <th>Dirección</th>
+                                            <th>Persona de contacto</th>
                                             <th>Acciones</th>
-                                            
                                         </tr>
                                     </thead>
                                     <tfoot class="text-center">
                                         <tr>
                                             <th>Id Proveedor</th>
-                                            <th>Nombre</th>
-                                            <th>Telefono</th>
-                                            <th>Direccion</th>
-                                            <th>Correo</th>
+                                            <th>Nombre de la empresa</th>
+                                            <th>Dirección</th>
+                                            <th>Persona de contacto</th>
                                             <th>Acciones</th>
-                                            
-
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -297,17 +303,15 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                         <tr class="text-center">
                                             <td><?php echo $dat['id_proveedor'] ?></td>
                                             <td><?php echo $dat['nombre'] ?></td>
-                                            <td><?php echo $dat['telefono'] ?></td>
                                             <td><?php echo $dat['direccion'] ?></td>
-                                            <td><?php echo $dat['correo'] ?></td>
+                                            <td><?php echo $dat['persona_contacto'] ?></td>
                                             <td>
                                             <div class="text-center">
-                                            <div class="btn-group">
-                                                <button class=" btn btn-primary btbEditar">Editar</button>
-                                                <button class=" btn btn-danger btnBorrar">Borrar</button>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-primary" onclick="showEditModal(<?php echo $dat['id_proveedor'] ?>)">Editar</button>
+                                                    <button class="btn btn-danger btnBorrar" onclick="confirmDelete(<?php echo $dat['id_proveedor'] ?>)">Borrar</button>
+                                                </div>
                                             </div>
-                                            </div>
-
 
                                             </td>
                                             
@@ -332,7 +336,7 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Sabores & delicias 2024</span>
+                        <span>Copyright &copy; PRONTOMUEBLE 2024</span>
                     </div>
                 </div>
             </footer>
@@ -355,15 +359,15 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Listo para salir?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Selecciona salir para cerrar sesion.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="login.php">Salir</a>
                 </div>
             </div>
         </div>
