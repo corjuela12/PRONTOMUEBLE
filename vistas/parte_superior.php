@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,6 +21,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/personalizado.css">
     
 </head>
 
@@ -82,6 +82,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="consultar_proveedores.php">Consultar proveedores</a>
                         <a class="collapse-item" href="agregar_proveedor.php">Agregar proveedor</a>
+                        <a class="collapse-item" href="telefono_proveedores.php">Telefono proveedores</a>
                         
                     </div>
                 </div>
