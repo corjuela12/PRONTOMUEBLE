@@ -2,9 +2,9 @@
 class conexion {
     public static function Conectar(){
         define('servidor', 'localhost');
-        define('nombre_bd', 'saboresydelicias'); 
-        define('usuario', 'root'); 
-        define('password', '');
+        define('nombre_bd', 'prontomueble'); 
+        define('usuario', 'phpmyadmin'); 
+        define('password', '7592db');
 
         $opciones = array(PDO::MYSQL_ATTR_INIT_COMMAND=> 'SET NAMES utf8');
 
