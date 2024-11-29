@@ -2,15 +2,14 @@
 include_once  "BD/conexionPDO.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id_venta = $_POST['id_venta'];
+    $fecha = $_POST['fecha'];
     $id_vendedor = $_POST['id_vendedor'];
-    $nombre = $_POST['nombre'];
-    $telefono = $_POST['telefono'];
-    $direccion = $_POST['direccion'];
-    $email = $_POST['email'];
-    $genero = $_POST['genero'];
-    $query = "UPDATE VENDEDORES SET nombre = ?, telefono = ?, direccion = ?, email = ?, genero = ? WHERE id_vendedor = ?";
+    $id_cliente = $_POST['id_cliente'];
+    $total = $_POST['total'];
+    $query = "UPDATE vendedor SET fecha = ?, id_vendedor = ?, id_cliente = ?, total = ? WHERE id_venta = ?";
     $stmt = $enlace->prepare($query);
-    $stmt->bind_param("sssssi", $nombre, $telefono, $direccion, $email, $genero, $id_vendedor);
+    $stmt->bind_param("sssssi", $fecha, $id_vendedor, $id_cliente, $total, $id_venta);
 
     $response = [];
     if ($stmt->execute()) {

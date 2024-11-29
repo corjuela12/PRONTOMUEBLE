@@ -25,22 +25,18 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                     <thead class="text-center">
                                         <tr>
                                             <th>Id Venta</th>
-                                            <th>Nombre del Venta</th>
-                                            <th>Atributo2</th>
-                                            <th>Atributo3</th>
-                                            <th>Atributo4</th>
-                                            <th>Atributo5</th>
+                                            <th>Id Vendedor</th>
+                                            <th>Id Cliente</th>
+                                            <th>Total</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot class="text-center">
                                         <tr>
                                             <th>Id Venta</th>
-                                            <th>Nombre del Venta</th>
-                                            <th>Atributo2</th>
-                                            <th>Atributo3</th>
-                                            <th>Atributo4</th>
-                                            <th>Atributo5</th>
+                                            <th>Id Vendedor</th>
+                                            <th>Id Cliente</th>
+                                            <th>Total</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </tfoot>
@@ -49,18 +45,16 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                         foreach($data as $dat) {
                                         ?>
                                         <tr class="text-center">
-                                            <td><?php echo $dat['id_Venta'] ?></td>
-                                            <td><?php echo $dat['nombre'] ?></td>
-                                            <td><?php echo $dat['Atributo2'] ?></td>
-                                            <td><?php echo $dat['Atributo3'] ?></td>
-                                            <td><?php echo $dat['Atributo4'] ?></td>
-                                            <td><?php echo $dat['Atributo5'] ?></td>
+                                            <td><?php echo $dat['id_venta'] ?></td>
+                                            <td><?php echo $dat['id_vendedor'] ?></td>
+                                            <td><?php echo $dat['id_cliente'] ?></td>
+                                            <td><?php echo $dat['total'] ?></td>
                                             <td>
                                             <div class="text-center">
                                                 <div class="btn-group">
-                                                    <button class="btn btn-primary" onclick="showEditModal(<?php echo $dat['id_Venta'] ?>)">Editar</button>
-                                                    <button class="btn btn-danger btnBorrar" onclick="confirmDelete(<?php echo $dat['id_Venta'] ?>)">Borrar</button>
-                                                    <button class="btn btn-warning btnDetalle" onclick="showDetalleVenta(<?php echo $dat['id_Venta'] ?>)">Detalle Venta</button>
+                                                    <button class="btn btn-primary" onclick="showEditModal(<?php echo $dat['id_venta'] ?>)">Editar</button>
+                                                    <button class="btn btn-danger btnBorrar" onclick="confirmDelete(<?php echo $dat['id_venta'] ?>)">Borrar</button>
+                                                    <button class="btn btn-warning btnDetalle" onclick="showDetalleVenta(<?php echo $dat['id_venta'] ?>)">Detalle Venta</button>
                                                 </div>
                                             </div>
                                             </td>
@@ -128,26 +122,18 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="modal-body">
                     <form id="editForm">
-                        <input type="hidden" id="edit_id_Venta" name="id_Venta">
+                        <input type="hidden" id="edit_id_venta" name="id_venta">>
                         <div class="form-group">
-                            <label for="edit_nombre">Nombre del Venta:</label>
-                            <input type="text" class="form-control" id="edit_nombre" name="nombre" required>
+                            <label for="edit_id_vendedor">Id Vendedor:</label>
+                            <input type="text" class="form-control" id="edit_id_vendedor" name="id_vendedor" required>
                         </div>
                         <div class="form-group">
-                            <label for="edit_Atributo2">Atributo2:</label>
-                            <input type="text" class="form-control" id="edit_Atributo2" name="Atributo2" required>
+                            <label for="edit_id_cliente">Id Cliente:</label>
+                            <input type="text" class="form-control" id="edit_id_cliente" name="id_cliente" required>
                         </div>
                         <div class="form-group">
-                            <label for="edit_Atributo3">Atributo3:</label>
-                            <input type="text" class="form-control" id="edit_Atributo3" name="Atributo3" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit_Atributo4">Atributo4:</label>
-                            <input type="text" class="form-control" id="edit_Atributo4" name="Atributo4" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="edit_Atributo5">Atributo5:</label>
-                            <input type="text" class="form-control" id="edit_Atributo5" name="Atributo5" required>
+                            <label for="edit_total">Total:</label>
+                            <input type="text" class="form-control" id="edit_total" name="total" required>
                         </div>
                         <button type="button" class="btn btn-primary" onclick="saveEdit()">Guardar Cambios</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -168,7 +154,7 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                     </button>
                 </div>
                 <div class="modal-body">
-                    ¿Estás seguro de que deseas eliminar este Venta?
+                    ¿Estás seguro de que deseas eliminar esta Venta?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -219,7 +205,7 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
     <script>
 
     // Detalle de la venta
-    function showDetalleVenta(idVenta) {
+    function showDetalleVenta(id_venta) {
         // Mostrar el modal
         var modal = new bootstrap.Modal(document.getElementById('detalleVentaModal'));
         modal.show();
@@ -228,7 +214,7 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         $.ajax({
             url: 'getDetalleVenta.php', // Archivo PHP que procesará la solicitud
             type: 'GET',
-            data: { idVenta: idVenta }, // Enviar el ID de la venta
+            data: { id_venta: id_venta }, // Enviar el ID de la venta
             success: function(response) {
                 // Mostrar la información en el modal
                 $('#detalleVentaContenido').html(response);
@@ -241,21 +227,21 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
     }
 
      // EDITAR
-     function showEditModal(idVenta) {
+     function showEditModal(id_venta) {
         $.ajax({
-            url: 'operaciones_Venta/obtener_Venta.php',
+            url: 'operaciones_venta/obtener_venta.php',
             type: 'GET',
-            data: { id: idVenta },
+            data: { id: id_venta },
             success: function(response) {
                 // Asumir que la respuesta es JSON y contiene los detalles del Venta
                 let Venta = JSON.parse(response);
 
                 // Rellenar el formulario del modal con los detalles del Venta
-                $('#edit_id_Venta').val(Venta.id_Venta);
+                $('#edit_id_venta').val(Venta.id_venta);
                 $('#edit_nombre').val(Venta.nombre);
-                $('#edit_Atributo2').val(Venta.Atributo2);
-                $('#edit_Atributo3').val(Venta.Atributo3);
-                $('#edit_Atributo4').val(Venta.Atributo4);
+                $('#edit_id_vendedor').val(Venta.id_vendedor);
+                $('#edit_id_cliente').val(Venta.id_cliente);
+                $('#edit_total').val(Venta.total);
                 $('#edit_Atributo5').val(Venta.Atributo5);
                 // Mostrar el modal
                 $('#editModal').modal('show');
@@ -270,7 +256,7 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         let formData = $('#editForm').serialize();
 
         $.ajax({
-            url: 'operaciones_Venta/editar_Venta.php',
+            url: 'operaciones_venta/editar_venta.php',
             type: 'POST',
             data: formData,
             success: function(response) {
