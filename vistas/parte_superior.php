@@ -69,6 +69,21 @@
                     </div>
                 </div>
             </li>
+            <!-- Nav Item - muebles-- Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMuebles"
+                    aria-expanded="true" aria-controls="collapseMuebles">
+                    <i class="bi bi-square-half"></i>
+                    <span>Muebles</span>
+                </a>
+                <div id="collapseMuebles" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="GestionarMuebles.php">Gestionar Muebles</a>
+                        <a class="collapse-item" href="">Color de Mueble</a>    
+                    </div>
+                </div>
+            </li>
 
             <!-- Nav Item - proveedores-- Collapse Menu -->
             <li class="nav-item">
