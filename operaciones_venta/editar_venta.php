@@ -1,37 +1,47 @@
 <?php
-include_once "../BD/conexionPDO.php";
+include_once "../BD/pruebaPDO.php"; // Asegúrate de que aquí se define correctamente la clase de conexión
 
 // Comprobar si se ha recibido una solicitud de edición
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Obtener los datos del formulario
     $id_venta = $_POST['id_venta'];
+    $fecha = $_POST['fecha'];
     $id_vendedor = $_POST['id_vendedor'];
     $id_cliente = $_POST['id_cliente'];
+    $id_mueble = $_POST['id_mueble'];
     $total = $_POST['total'];
-    $fecha = $_POST['fecha'];
 
-    // Consulta de actualización
-    $query = "UPDATE ventas SET id_vendedor = ?, id_cliente = ?, total = ?, fecha = ? WHERE id_venta = ?";
+    try {
+        // Obtener la conexión
+        $enlace = conexion::Conectar(); // Asegúrate de que este método devuelve un objeto PDO
 
-    // Preparar la consulta
-    if ($stmt = $enlace->prepare($query)) {
+        // Consulta de actualización
+        $query = "UPDATE ventas SET fecha = :fecha, id_vendedor = :id_vendedor, id_cliente = :id_cliente, 
+                  id_mueble = :id_mueble, total = :total WHERE id_venta = :id_venta";
+
+        // Preparar la consulta
+        $stmt = $enlace->prepare($query);
+
         // Vincular los parámetros
-        $stmt->bind_param("iisss", $id_vendedor, $id_cliente, $total, $fecha, $id_venta);
+        $stmt->bindValue(':fecha', $fecha);
+        $stmt->bindValue(':id_vendedor', $id_vendedor);
+        $stmt->bindValue(':id_cliente', $id_cliente);
+        $stmt->bindValue(':id_mueble', $id_mueble);
+        $stmt->bindValue(':total', $total);
+        $stmt->bindValue(':id_venta', $id_venta);
 
         // Ejecutar la consulta
         if ($stmt->execute()) {
             echo json_encode(['success' => true]);
         } else {
-            echo json_encode(['success' => false, 'error' => $stmt->error]);
+            echo json_encode(['success' => false, 'error' => $stmt->errorInfo()]);
         }
-
-        // Cerrar la declaración
-        $stmt->close();
-    } else {
-        echo json_encode(['success' => false, 'error' => $enlace->error]);
+    } catch (Exception $e) {
+        // Capturar cualquier error y devolverlo como JSON
+        echo json_encode(['success' => false, 'error' => $e->getMessage()]);
     }
 
-    // Cerrar la conexión
-    $enlace->close();
+    // Detener la ejecución para evitar cualquier salida extra
+    exit;
 }
 ?>

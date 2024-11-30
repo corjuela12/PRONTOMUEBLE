@@ -34,6 +34,7 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                         <th>Fecha Registro</th>
                                         <th>Id Vendedor</th>
                                         <th>Id Cliente</th>
+                                        <th>Id Mueble</th>
                                         <th>Total</th>
                                         <th>Acciones</th>
                                     </tr>
@@ -47,6 +48,7 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                         <td><?php echo $dat['fecha'] ?></td>
                                         <td><?php echo $dat['id_vendedor'] ?></td>
                                         <td><?php echo $dat['id_cliente'] ?></td>
+                                        <td><?php echo $dat['id_mueble'] ?></td>
                                         <td><?php echo $dat['total'] ?></td>
                                         <td>
                                             <div class="text-center">
@@ -122,6 +124,10 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
             <div class="modal-body">
                 <form id="createVentaForm">
                     <div class="form-group">
+                        <label for="create_fecha">Fecha de Registro:</label>
+                        <input type="date" class="form-control" id="create_fecha" name="fecha" value="<?php echo date('Y-m-d'); ?>" required>
+                    </div>
+                    <div class="form-group">
                         <label for="create_id_vendedor">Id Vendedor:</label>
                         <input type="number" class="form-control" id="create_id_vendedor" name="id_vendedor" required>
                     </div>
@@ -130,13 +136,12 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                         <input type="number" class="form-control" id="create_id_cliente" name="id_cliente" required>
                     </div>
                     <div class="form-group">
-                        <label for="create_total">Total:</label>
-                        <input type="number" class="form-control" id="create_total" name="total" required>
+                        <label for="create_id_mueble">Id mueble:</label>
+                        <input type="number" class="form-control" id="create_id_mueble" name="id_mueble" required>
                     </div>
                     <div class="form-group">
-                        <label for="create_fecha">Fecha de Registro:</label>
-                        <input type="date" class="form-control" id="create_fecha" name="fecha" 
-                            value="<?php echo date('Y-m-d'); ?>" required>
+                        <label for="create_total">Total:</label>
+                        <input type="number" class="form-control" id="create_total" name="total" required>
                     </div>
                     <button type="button" class="btn btn-primary" onclick="saveVenta()">Guardar Venta</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -145,7 +150,6 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 </div>
-
 
     <!-- Modal editar -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -171,6 +175,10 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                         <div class="form-group">
                             <label for="edit_id_cliente">Id Cliente:</label>
                             <input type="text" class="form-control" id="edit_id_cliente" name="id_cliente" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_id_mueble">Id mueble:</label>
+                            <input type="text" class="form-control" id="edit_id_mueble" name="id_mueble" required>
                         </div>
                         <div class="form-group">
                             <label for="edit_total">Total:</label>
@@ -205,27 +213,31 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
-
-<!-- Modal para mostrar el detalle de la venta -->
-    <div class="modal fade" id="detalleVentaModal" tabindex="-1" aria-labelledby="detalleVentaLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="detalleVentaLabel">Detalle de la Venta</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Aquí se cargará dinámicamente el contenido -->
-                    <div id="detalleVentaContenido">
-                        <p class="text-center">Cargando información...</p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
+<!-- Modal detalle venta -->
+<div class="modal fade" id="detalleVentaModal" tabindex="-1" role="dialog" aria-labelledby="detalleVentaModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detalleVentaModalLabel">Detalles de la Venta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Id Venta:</strong> <span id="detalle_id_venta"></span></p>
+                <p><strong>Fecha Registro:</strong> <span id="detalle_fecha"></span></p>
+                <p><strong>Id Vendedor:</strong> <span id="detalle_id_vendedor"></span></p>
+                <p><strong>Id Cliente:</strong> <span id="detalle_id_cliente"></span></p>
+                <p><strong>Id Mueble:</strong> <span id="detalle_id_mueble"></span></p>
+                <p><strong>Total:</strong> <span id="detalle_total"></span></p>
+                <!-- Aquí puedes agregar más detalles si es necesario -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -245,29 +257,6 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
     <script src="js/demo/datatables-demo.js"></script>
 
     <script>
-
-    // Detalle de la venta
-    function showDetalleVenta(id_venta) {
-        console.log("ID de Venta: " + id_venta);  // Agrega esto para verificar
-        // Mostrar el modal
-        var modal = new bootstrap.Modal(document.getElementById('detalleVentaModal'));
-        modal.show();
-
-        // Cargar los datos de la venta usando AJAX
-        $.ajax({
-            url: 'getDetalleVenta.php',
-            type: 'GET',
-            data: { id_venta: id_venta },
-            success: function(response) {
-                console.log(response);  // Agrega esto para ver la respuesta
-                $('#detalleVentaContenido').html(response);
-            },
-            error: function() {
-                $('#detalleVentaContenido').html('<p class="text-danger text-center">Error al cargar los datos de la venta.</p>');
-            }
-        });
-    }
-
 
     //Nueva venta
     function saveVenta() {
@@ -322,6 +311,7 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                     $('#edit_id_venta').val(venta.id_venta);
                     $('#edit_id_vendedor').val(venta.id_vendedor);
                     $('#edit_id_cliente').val(venta.id_cliente);
+                    $('#edit_id_mueble').val(venta.id_mueble);
                     $('#edit_total').val(venta.total);
                     $('#edit_fecha').val(venta.fecha); // Fecha en formato AAAA-MM-DD
                     $('#editModal').modal('show');
@@ -398,6 +388,40 @@ function confirmDelete(id_venta) {
         }
     });
 
+    // Función para mostrar los detalles de la venta
+    function showDetalleVenta(id_venta) {
+        $.ajax({
+            url: 'operaciones_venta/obtener_detalles_venta.php', // Archivo PHP que obtendrá los detalles
+            type: 'GET',
+            data: { id: id_venta },
+            success: function(response) {
+                try {
+                    let venta = JSON.parse(response);
+                    
+                    if (venta.error) {
+                        alert('Error: ' + venta.error);
+                        return;
+                    }
+
+                    // Rellenar el modal con los detalles de la venta
+                    $('#detalle_id_venta').text(venta.id_venta);
+                    $('#detalle_fecha').text(venta.fecha);
+                    $('#detalle_id_vendedor').text(venta.id_vendedor);
+                    $('#detalle_id_cliente').text(venta.id_cliente);
+                    $('#detalle_id_mueble').text(venta.id_mueble);
+                    $('#detalle_total').text(venta.total);
+
+                    // Mostrar el modal con los detalles
+                    $('#detalleVentaModal').modal('show');
+                } catch (error) {
+                    alert('Error al procesar la respuesta JSON: ' + error.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Hubo un error al obtener los detalles de la venta. Estado: ' + status + ', Error: ' + error);
+            }
+        });
+    }
 
     </script>
 

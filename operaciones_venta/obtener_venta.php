@@ -1,9 +1,7 @@
 <?php
-// Habilitar la visualización de errores
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// Configurar manejo de errores
 
-// Conexión a la base de datos
+// Incluir el archivo de conexión
 include_once "../BD/conexionPDO.php";
 
 // Verificar si se ha pasado el parámetro 'id'
@@ -11,8 +9,11 @@ if (isset($_GET['id'])) {
     $id_venta = $_GET['id'];
 
     try {
+        // Obtener la conexión
+        $enlace = conexion::Conectar();
+
         // Preparar la consulta
-        $query = "SELECT id_venta, fecha, id_vendedor, id_cliente, total FROM VENTAS WHERE id_venta = :id_venta";
+        $query = "SELECT * FROM VENTAS WHERE id_venta = :id_venta";
         $stmt = $enlace->prepare($query);
         $stmt->bindParam(':id_venta', $id_venta, PDO::PARAM_INT);
         $stmt->execute();
@@ -34,4 +35,7 @@ if (isset($_GET['id'])) {
     // Si no se pasó el parámetro 'id'
     echo json_encode(['error' => 'ID no proporcionado']);
 }
+
+// Detener la ejecución para evitar cualquier salida extra
+exit;
 ?>

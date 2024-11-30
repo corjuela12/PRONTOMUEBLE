@@ -1,6 +1,7 @@
 <?php
 include_once "../BD/conexionPDO.php";
 
+
 // Verificar si se recibió el ID de la venta
 if (isset($_POST['id_venta'])) {
     $id_venta = $_POST['id_venta'];
