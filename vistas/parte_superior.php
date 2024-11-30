@@ -167,6 +167,7 @@
                 </a>
                 <div id="collapseVendedor" class="collapse" aria-labelledby="headingVendedor" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="crear_empleado.php">Agregar Vendedor</a>
                     <a class="collapse-item" href="consultar_vendedor.php">Consultar Vendedor</a>    
                 </div>
             </div>

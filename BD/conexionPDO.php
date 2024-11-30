@@ -2,7 +2,7 @@
 class conexion {
     public static function Conectar(){
         define('servidor', 'localhost');
-        define('nombre_bd', 'saboresydelicias'); 
+        define('nombre_bd', 'pronto_mueble'); 
         define('usuario', 'root'); 
         define('password', '');
 
