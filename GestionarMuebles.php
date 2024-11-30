@@ -253,20 +253,57 @@ if ($resultado_tel->num_rows > 0) {
                 </div>
                 <div class="modal-body">
                     <form id="editForm">
-                        <input type="hidden" id="edit_id_Mueble" name="id_Mueble">
+                        <input type="hidden" id="edit_id_Mueble" name="id_mueble">
+                        <!-- Campo Nombre -->
                         <div class="form-group">
-                            <label for="edit_telefono">Teléfono proveedor:</label>
-                            <input type="text" class="form-control" id="edit_telefono" name="telefono_proveedor" required>
+                            <label for="edit_nombre">Nombre del mueble:</label>
+                            <input type="text" class="form-control" id="edit_nombre" name="nombre" required>
                         </div>
-                        <div class="d-flex justify-content-end">
+                        <!-- Campo Dimensión -->
+                        <div class="form-group">
+                            <label for="edit_dimension">Dimensión del mueble:</label>
+                            <input type="text" class="form-control" id="edit_dimension" name="dimension" required>
+                        </div>
+                        <!-- Campo Imagen -->
+                        <div class="form-group">
+                            <label for="edit_imagen">Imagen del mueble:</label>
+                            <input type="text" class="form-control" id="edit_imagen" name="img" required>
+                        </div>
+                        <!-- Campo Precio Venta -->
+                        <div class="form-group">
+                            <label for="edit_precio">Precio de venta:</label>
+                            <input type="text" class="form-control" id="edit_precio" name="precio" required>
+                        </div>
+                        <!-- Campo Stock -->
+                        <div class="form-group">
+                            <label for="edit_stock">Stock del mueble:</label>
+                            <input type="number" class="form-control" id="edit_stock" name="stock" required>
+                        </div>
+                        <!-- Campo Código Tipo de Mueble -->
+                        <div class="form-group">
+                            <label for="edit_cod_tipo_mueble">Código del tipo de mueble:</label>
+                            <input type="text" class="form-control" id="edit_cod_tipo_mueble" name="cod_tipo_mueble" required>
+                        </div>
+                        <!-- Campo Código Color -->
+                        <div class="form-group">
+                            <label for="edit_cod_color">Código del color de mueble:</label>
+                            <input type="text" class="form-control" id="edit_cod_color" name="cod_color" required>
+                        </div>
+                        <!-- Campo Código Material -->
+                        <div class="form-group">
+                            <label for="edit_cod_material">Código del material de mueble:</label>
+                            <input type="text" class="form-control" id="edit_cod_material" name="cod_material" required>
+                        </div>
+                        
                             <button type="button" class="btn btn-primary" onclick="saveEdit()">Guardar Cambios</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        </div>
+                        
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
 
 
                          
@@ -282,7 +319,7 @@ if ($resultado_tel->num_rows > 0) {
                     </button>
                 </div>
                 <div class="modal-body">
-                    ¿Estás seguro de que deseas eliminar el telefono del proveedor?
+                    ¿Estás seguro de que deseas eliminar el mueble?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -312,44 +349,51 @@ if ($resultado_tel->num_rows > 0) {
     <script>
     
     // EDITAR
-    function showEditModal(idProveedor, telefonoProveedor) {
-        $.ajax({
-            url: 'operaciones_telefono_proveedor/obtener_tel_prove.php',
-            type: 'GET',
-            data: { 
-                id_proveedor: idProveedor, 
-                telefono_proveedor: telefonoProveedor 
-            },
-            success: function(response) {
-                // Asumir que la respuesta es JSON y contiene los detalles del teléfono
-                let telefono_proveedor = JSON.parse(response);
 
-                // Rellenar el formulario del modal con los detalles del teléfono
-                $('#edit_id_proveedor').val(telefono_proveedor.id_proveedor);  // Mostrar el id_proveedor
-                $('#original_telefono_proveedor').val(telefono_proveedor.telefono_proveedor); // Valor original del teléfono
-                $('#edit_telefono').val(telefono_proveedor.telefono_proveedor);  // Mostrar el teléfono
+    function showEditModal(idMueble) {
+    $.ajax({
+        url: 'operaciones_muebles/obtenerMueble.php',
+        type: 'GET',
+        data: { 
+            id_mueble: idMueble,
+        },
+        success: function(response) {
+            // Asumir que la respuesta es JSON y contiene los detalles del mueble
+            let mueble = JSON.parse(response);
 
-                // Mostrar el modal
-                $('#editModal').modal('show');
-            },
-            error: function() {
-                alert('Hubo un error al obtener los detalles del teléfono');
-            }
+            // Rellenar el formulario del modal con los detalles del mueble
+            $('#edit_id_Mueble').val(mueble.id_mueble);  // Mostrar el id_mueble
+            $('#edit_nombre').val(mueble.nombre);  // Nombre del mueble
+            $('#edit_dimension').val(mueble.dimension);  // Dimensión del mueble
+            $('#edit_imagen').val(mueble.img);  // Imagen del mueble
+            $('#edit_precio').val(mueble.precio);  // Precio del mueble
+            $('#edit_stock').val(mueble.stock);  // Stock del mueble
+            $('#edit_cod_tipo_mueble').val(mueble.cod_tipo_mueble);  // Código del tipo de mueble
+            $('#edit_cod_color').val(mueble.cod_color);  // Código del color del mueble
+            $('#edit_cod_material').val(mueble.cod_material);  // Código del material del mueble
+           
+            // Mostrar el modal
+            $('#editModal').modal('show');
+        },
+        error: function() {
+            alert('Hubo un error al obtener los detalles del mueble');
+        }
         });
     }
+
 
     function saveEdit() {
     let formData = $('#editForm').serialize(); // Serializar todo el formulario
 
         $.ajax({
-            url: 'operaciones_telefono_proveedor/editar_tel_prove.php',
+            url: 'operaciones_muebles/editar_Mueble.php',
             type: 'POST',
             data: formData,
             success: function(response) {
                 // Asumir que la respuesta es JSON y contiene un campo "success"
                 let result = JSON.parse(response);
                 if (result.success) {
-                    alert('Teléfono del proveedor actualizado exitosamente');
+                    alert('Mueble actualizado exitosamente');
                     // Cerrar el modal
                     $('#editModal').modal('hide');
                     // Recargar la página
@@ -365,7 +409,7 @@ if ($resultado_tel->num_rows > 0) {
     }
 
 
-    //Borrar telefono proveedor
+    //Borrar Mueble
 
     // Función para mostrar el modal de confirmación de eliminación
     function confirmDelete(idProducto) {
@@ -383,14 +427,14 @@ if ($resultado_tel->num_rows > 0) {
         console.log(idProducto);
     // Enviar la solicitud de eliminación mediante AJAX
     $.ajax({
-        url: 'operaciones_telefono_proveedor/borrar_telefono_prove.php',
+        url: 'operaciones_muebles/borrarMueble.php',
         type: 'POST',
         data: { id: idProducto },
         success: function(response) {
             // Asumir que la respuesta es JSON y contiene un campo "success"
             let result = JSON.parse(response);
             if (result.success) {
-                alert('telefono proveedor eliminado exitosamente');
+                alert('Mueble eliminado exitosamente');
                 // Recargar la página
                 location.reload();
             } else {
