@@ -105,7 +105,7 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
                                             $id = $_GET['id_producto'];
                                             $num = $_GET['num'];
 
-                                            // Ejemplo de actualización UPDATE `saboresydelicias`.`inventario` SET `cantidad` = '1' WHERE (`id_inventario` = '1');
+                                            // Ejemplo de actualización UPDATE `pronto_mueble`.`inventario` SET `cantidad` = '1' WHERE (`id_inventario` = '1');
                                         
                                             $consulta = "UPDATE inventario SET cantidad = cantidad + '$num' WHERE producto_id_producto = '$id'";
                                             $resultado = conexion::Actualizar($consulta);

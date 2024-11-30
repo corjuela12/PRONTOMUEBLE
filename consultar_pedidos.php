@@ -337,14 +337,14 @@ $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
                                             $id_producto = $_GET['id_producto'];
                                             echo $id_producto;
 
-                                            // Ejemplo de actualización UPDATE `saboresydelicias`.`inventario` SET `cantidad` = '1' WHERE (`id_inventario` = '1');
+                                            // Ejemplo de actualización UPDATE `pronto_mueble`.`inventario` SET `cantidad` = '1' WHERE (`id_inventario` = '1');
                                     
                                             $consulta = "UPDATE inventario SET cantidad = cantidad - '$cant' WHERE producto_id_producto = $id_producto;";
                                             $resultado = conexion::Actualizar($consulta);
 
 
-                                            //UPDATE `saboresydelicias`.`pedido` SET `estado` = '2' WHERE (`id_pedido` = '50001');
-                                            //UPDATE `saboresydelicias`.`pedido` SET `estado` = '1' WHERE (`id_pedido` = '50001');
+                                            //UPDATE `pronto_mueble`.`pedido` SET `estado` = '2' WHERE (`id_pedido` = '50001');
+                                            //UPDATE `pronto_mueble`.`pedido` SET `estado` = '1' WHERE (`id_pedido` = '50001');
                                             
                                             $cons = "UPDATE pedido SET estado = '2' WHERE `id_pedido` = '$id' ;";
                                             
