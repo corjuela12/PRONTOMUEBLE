@@ -12,7 +12,6 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
                 <!-- Begin Page Content -->
-
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">            
@@ -20,9 +19,7 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                     </div>
                 </div>
-
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
                     <h2 class="m-0 font-weight-bold text-primary text-center">Consultar Vendedor</h1>
                     
@@ -56,7 +53,7 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                             <div class="text-center">
                                                 <div class="btn-group">
                                                     <button class="btn btn-primary" onclick="showEditModal(<?php echo $dat['id_vendedor'] ?>)">Editar</button>
-                                                    <button class="btn btn-danger btnBorrar" onclick="confirmDelete(<?php echo $dat['id_vendedor'] ?>)">Borrar</button>
+                                                    <button class="btn btn-danger btnBorrar" onclick="confirmDelete(<?php echo $dat['id_vendedor']; ?>)">Borrar</button>
                                                 </div>
                                             </div>
                                             </td>
@@ -188,7 +185,11 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                         <div class="form-group">
                             <label for="edit_genero">genero:</label>
-                            <input type="text" class="form-control" id="edit_genero" name="genero" required>
+                            <select class="form-control" id="create_genero" name="genero" required>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="Otro">Otro</option>
+                            </select>
                         </div>
                         <button type="button" class="btn btn-primary" onclick="saveEdit()">Guardar Cambios</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -213,7 +214,7 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <a href="#" id="deleteButton" class="btn btn-danger">Borrar</a>
+                    <button id="confirmDeleteButton" class="btn btn-danger">Borrar</button>
                 </div>
             </div>
         </div>
@@ -264,25 +265,36 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
      // EDITAR
      function showEditModal(idvendedor) {
+        console.log("Enviando solicitud para ID: ", idvendedor); // Depuración
+
         $.ajax({
             url: 'operaciones_vendedor/obtener_vendedor.php',
             type: 'GET',
             data: { id: idvendedor },
             success: function(response) {
-                // Asumir que la respuesta es JSON y contiene los detalles del vendedor
-                let vendedor = JSON.parse(response);
+                try {
+                    let vendedor = JSON.parse(response);
 
-                // Rellenar el formulario del modal con los detalles del vendedor
-                $('#edit_id_vendedor').val(vendedor.id_vendedor);
-                $('#edit_nombre').val(vendedor.nombre);
-                $('#edit_telefono').val(vendedor.telefono);
-                $('#edit_direccion').val(vendedor.direccion);
-                $('#edit_email').val(vendedor.email);
-                $('#edit_genero').val(vendedor.genero);
-                // Mostrar el modal
-                $('#editModal').modal('show');
+                    // Verificar los datos recibidos
+                    console.log("Datos recibidos: ", vendedor);
+
+                    // Rellenar el formulario del modal con los detalles del vendedor
+                    $('#edit_id_vendedor').val(vendedor.id_vendedor);
+                    $('#edit_nombre').val(vendedor.nombre);
+                    $('#edit_telefono').val(vendedor.telefono);
+                    $('#edit_direccion').val(vendedor.direccion);
+                    $('#edit_email').val(vendedor.email);
+                    $('#edit_genero').val(vendedor.genero);
+
+                    // Mostrar el modal
+                    $('#editModal').modal('show');
+                } catch (e) {
+                    console.error("Error al procesar los datos: ", e);
+                    alert('Hubo un error al procesar la respuesta del servidor.');
+                }
             },
-            error: function() {
+            error: function(xhr, status, error) {
+                console.error("Error en la solicitud AJAX: ", status, error);
                 alert('Hubo un error al obtener los detalles del vendedor');
             }
         });
@@ -290,41 +302,88 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
     function saveEdit() {
         let formData = $('#editForm').serialize();
+        console.log("Datos enviados:", formData); // Depuración
 
         $.ajax({
             url: 'operaciones_vendedor/editar_vendedor.php',
             type: 'POST',
             data: formData,
             success: function(response) {
-                // Asumir que la respuesta es JSON y contiene un campo "success"
-                let result = JSON.parse(response);
-                if (result.success) {
-                    alert('vendedor actualizado exitosamente');
-                    // Cerrar el modal
-                    $('#editModal').modal('hide');
-                    // Recargar la página
-                    location.reload();
-                } else {
-                    alert('Hubo un error al actualizar el vendedor');
+                try {
+                    let result = JSON.parse(response);
+                    console.log("Respuesta del servidor:", result); // Depuración
+                    if (result.success) {
+                        alert('Vendedor actualizado exitosamente');
+                        $('#editModal').modal('hide');
+                        location.reload();
+                    } else {
+                        console.error("Error al actualizar:", result.error); // Más detalles del error
+                        alert('Hubo un error al actualizar el vendedor');
+                    }
+                } catch (e) {
+                    console.error("Error al procesar respuesta:", e);
+                    alert('Hubo un error al procesar la respuesta del servidor');
                 }
             },
-            error: function() {
+            error: function(xhr, status, error) {
+                console.error("Error en AJAX:", status, error);
                 alert('Hubo un error al actualizar el vendedor');
             }
         });
     }
 
-    //Borrar vendedor
-    // Función para mostrar el modal de confirmación de eliminación
-    function confirmDelete(idProducto) {
-        // Actualizar el href del botón Borrar en el modal para que apunte al script de borrado con el ID del producto
-        let deleteButton = document.getElementById("deleteButton");
-            deleteButton.onclick = function() {
-            deleteProduct(idProducto);
-        };
-        // Mostrar el modal de confirmación
-        $('#confirmDeleteModal').modal('show');
-    }
+
+// Función para borrar el vendedor
+// Función para mostrar el modal y preparar la eliminación
+function confirmDelete(idVendedor) {
+    // Establecer el ID del vendedor en el botón de confirmación
+    const confirmDeleteButton = document.getElementById("confirmDeleteButton");
+    
+    // Limpiar cualquier evento previo del botón
+    confirmDeleteButton.onclick = null;
+
+    // Configurar el evento del botón para llamar a deleteProduct con el ID correcto
+    confirmDeleteButton.onclick = function () {
+        deleteProduct(idVendedor);
+    };
+
+    // Mostrar el modal
+    $('#confirmDeleteModal').modal('show');
+}
+
+// Función para realizar la solicitud AJAX de eliminación
+function deleteProduct(idVendedor) {
+    $.ajax({
+        url: 'operaciones_vendedor/eliminar_vendedor.php', // Ruta al archivo de eliminación
+        type: 'POST',
+        data: { id_vendedor: idVendedor },
+        success: function(response) {
+            try {
+                let result = JSON.parse(response);
+                console.log("Respuesta del servidor:", result); // Depuración
+                if (result.success) {
+                    alert('Vendedor eliminado exitosamente');
+                    // Ocultar el modal
+                    $('#confirmDeleteModal').modal('hide');
+                    // Recargar la página
+                    location.reload();
+                } else {
+                    console.error("Error al eliminar:", result.error);
+                    alert('Hubo un error al eliminar el vendedor');
+                }
+            } catch (e) {
+                console.error("Error al procesar respuesta:", e);
+                alert('Hubo un error al procesar la respuesta del servidor');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error en AJAX:", status, error);
+            alert('Hubo un error al eliminar el vendedor');
+        }
+    });
+}
+
+
     </script>
 
 <?php include('vistas/parte_inferior.php'); ?>

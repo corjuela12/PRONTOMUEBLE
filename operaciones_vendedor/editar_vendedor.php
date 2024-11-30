@@ -1,24 +1,41 @@
 <?php
-include_once  "BD/conexionPDO.php";
+include_once "../BD/conexionPDO.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_vendedor = $_POST['id_vendedor'];
-    $nombre = $_POST['nombre'];
-    $telefono = $_POST['telefono'];
-    $direccion = $_POST['direccion'];
-    $email = $_POST['email'];
-    $genero = $_POST['genero'];
-    $query = "UPDATE VENDEDORES SET nombre = ?, telefono = ?, direccion = ?, email = ?, genero = ? WHERE id_vendedor = ?";
-    $stmt = $enlace->prepare($query);
-    $stmt->bind_param("sssssi", $nombre, $telefono, $direccion, $email, $genero, $id_vendedor);
+    try {
+        $id_vendedor = $_POST['id_vendedor'];
+        $nombre = $_POST['nombre'];
+        $telefono = $_POST['telefono'];
+        $direccion = $_POST['direccion'];
+        $email = $_POST['email'];
+        $genero = $_POST['genero'];
 
-    $response = [];
-    if ($stmt->execute()) {
-        $response['success'] = true;
-    } else {
-        $response['success'] = false;
-        $response['error'] = $enlace->error; // Cambiado para capturar el error desde la conexión ($enlace)
+        // Crear instancia de la conexión
+        $objeto = new Conexion();
+        $conexion = $objeto->Conectar();
+
+        // Preparar consulta
+        $query = "UPDATE VENDEDORES SET nombre = :nombre, telefono = :telefono, direccion = :direccion, email = :email, genero = :genero WHERE id_vendedor = :id_vendedor";
+        $stmt = $conexion->prepare($query);
+
+        // Asignar parámetros
+        $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+        $stmt->bindParam(':telefono', $telefono, PDO::PARAM_STR);
+        $stmt->bindParam(':direccion', $direccion, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':genero', $genero, PDO::PARAM_STR);
+        $stmt->bindParam(':id_vendedor', $id_vendedor, PDO::PARAM_INT);
+
+        $response = [];
+        if ($stmt->execute()) {
+            $response['success'] = true;
+        } else {
+            $response['success'] = false;
+            $response['error'] = $stmt->errorInfo(); // Capturar el error de la consulta
+        }
+        echo json_encode($response);
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'error' => $e->getMessage()]);
     }
-    echo json_encode($response);
 }
 ?>

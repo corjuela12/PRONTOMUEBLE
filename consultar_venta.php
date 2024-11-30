@@ -12,6 +12,13 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
                 <!-- Begin Page Content -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">            
+                        <button id="btnNuevaVenta" type="button" class="btn btn-success" data-toggle="modal" data-target="#createVentaModal">Nueva Venta</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
@@ -21,25 +28,27 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead class="text-center">
-                                        <tr>
-                                            <th>Id Venta</th>
-                                            <th>Id Vendedor</th>
-                                            <th>Id Cliente</th>
-                                            <th>Total</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        foreach($data as $dat) {
-                                        ?>
-                                        <tr class="text-center">
-                                            <td><?php echo $dat['id_venta'] ?></td>
-                                            <td><?php echo $dat['id_vendedor'] ?></td>
-                                            <td><?php echo $dat['id_cliente'] ?></td>
-                                            <td><?php echo $dat['total'] ?></td>
-                                            <td>
+                                <thead class="text-center">
+                                    <tr>
+                                        <th>Id Venta</th>
+                                        <th>Id Vendedor</th>
+                                        <th>Id Cliente</th>
+                                        <th>Total</th>
+                                        <th>Fecha Registro</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    foreach($data as $dat) {
+                                    ?>
+                                    <tr class="text-center">
+                                        <td><?php echo $dat['id_venta'] ?></td>
+                                        <td><?php echo $dat['id_vendedor'] ?></td>
+                                        <td><?php echo $dat['id_cliente'] ?></td>
+                                        <td><?php echo $dat['total'] ?></td>
+                                        <td><?php echo $dat['fecha'] ?></td>
+                                        <td>
                                             <div class="text-center">
                                                 <div class="btn-group">
                                                     <button class="btn btn-primary" onclick="showEditModal(<?php echo $dat['id_venta'] ?>)">Editar</button>
@@ -47,12 +56,12 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                                     <button class="btn btn-warning btnDetalle" onclick="showDetalleVenta(<?php echo $dat['id_venta'] ?>)">Detalle Venta</button>
                                                 </div>
                                             </div>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                        }
-                                        ?>   
-                                    </tbody>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    }
+                                    ?>   
+                                </tbody>
                                 </table>
                             </div>
                         </div>
@@ -100,6 +109,44 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
+    <!-- Modal crear -->
+    <div class="modal fade" id="createVentaModal" tabindex="-1" role="dialog" aria-labelledby="createVentaModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createVentaModalLabel">Registrar Nueva Venta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="createVentaForm">
+                    <div class="form-group">
+                        <label for="create_id_vendedor">Id Vendedor:</label>
+                        <input type="number" class="form-control" id="create_id_vendedor" name="id_vendedor" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="create_id_cliente">Id Cliente:</label>
+                        <input type="number" class="form-control" id="create_id_cliente" name="id_cliente" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="create_total">Total:</label>
+                        <input type="number" class="form-control" id="create_total" name="total" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="create_fecha">Fecha de Registro:</label>
+                        <input type="date" class="form-control" id="create_fecha" name="fecha" 
+                            value="<?php echo date('Y-m-d'); ?>" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="saveVenta()">Guardar Venta</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
     <!-- Modal editar -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -112,7 +159,7 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="modal-body">
                     <form id="editForm">
-                        <input type="hidden" id="edit_id_venta" name="id_venta">>
+                        <input type="hidden" id="edit_id_venta" name="id_venta">
                         <div class="form-group">
                             <label for="edit_id_vendedor">Id Vendedor:</label>
                             <input type="text" class="form-control" id="edit_id_vendedor" name="id_vendedor" required>
@@ -124,6 +171,10 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                         <div class="form-group">
                             <label for="edit_total">Total:</label>
                             <input type="text" class="form-control" id="edit_total" name="total" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_fecha">Fecha:</label>
+                            <input type="date" class="form-control" id="edit_fecha" name="fecha" required>
                         </div>
                         <button type="button" class="btn btn-primary" onclick="saveEdit()">Guardar Cambios</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -216,6 +267,39 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         });
     }
 
+    //Nueva venta
+    function saveVenta() {
+    let formData = $('#createVentaForm').serialize();
+
+    $.ajax({
+        url: 'operaciones_venta/crear_venta.php', // Archivo PHP que manejará la creación
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+            try {
+                let result = JSON.parse(response);
+                if (result.success) {
+                    alert('Venta creada exitosamente');
+                    // Cerrar el modal
+                    $('#createVentaModal').modal('hide');
+                    // Recargar la página para actualizar la tabla
+                    location.reload();
+                } else {
+                    console.error("Error al crear la venta:", result.error);
+                    alert('Hubo un error al crear la venta');
+                }
+            } catch (e) {
+                console.error("Error al procesar la respuesta del servidor:", e);
+                alert('Hubo un error al procesar la respuesta del servidor');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error en la solicitud AJAX:", status, error);
+            alert('Hubo un error al registrar la venta');
+        }
+    });
+}
+
      // EDITAR
      function showEditModal(id_venta) {
         $.ajax({
@@ -223,50 +307,54 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
             type: 'GET',
             data: { id: id_venta },
             success: function(response) {
-                // Asumir que la respuesta es JSON y contiene los detalles del Venta
-                let Venta = JSON.parse(response);
+                console.log("Respuesta del servidor: ", response); // Ver qué se está devolviendo
+                try {
+                    let venta = JSON.parse(response);
 
-                // Rellenar el formulario del modal con los detalles del Venta
-                $('#edit_id_venta').val(Venta.id_venta);
-                $('#edit_nombre').val(Venta.nombre);
-                $('#edit_id_vendedor').val(Venta.id_vendedor);
-                $('#edit_id_cliente').val(Venta.id_cliente);
-                $('#edit_total').val(Venta.total);
-                $('#edit_Atributo5').val(Venta.Atributo5);
-                // Mostrar el modal
-                $('#editModal').modal('show');
+                    if (venta.error) {
+                        alert('Error: ' + venta.error);
+                        return;
+                    }
+
+                    // Rellenar el formulario con los detalles de la venta
+                    $('#edit_id_venta').val(venta.id_venta);
+                    $('#edit_id_vendedor').val(venta.id_vendedor);
+                    $('#edit_id_cliente').val(venta.id_cliente);
+                    $('#edit_total').val(venta.total);
+                    $('#edit_fecha').val(venta.fecha); // Fecha en formato AAAA-MM-DD
+                    $('#editModal').modal('show');
+                } catch (error) {
+                    alert('Error al procesar la respuesta JSON: ' + error.message);
+                }
             },
-            error: function() {
-                alert('Hubo un error al obtener los detalles del Venta');
+            error: function(xhr, status, error) {
+                alert('Hubo un error al obtener los detalles de la venta. Estado: ' + status + ', Error: ' + error);
             }
         });
     }
 
     function saveEdit() {
-        let formData = $('#editForm').serialize();
+    let formData = $('#editForm').serialize();
 
-        $.ajax({
-            url: 'operaciones_venta/editar_venta.php',
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                // Asumir que la respuesta es JSON y contiene un campo "success"
-                let result = JSON.parse(response);
-                if (result.success) {
-                    alert('Venta actualizado exitosamente');
-                    // Cerrar el modal
-                    $('#editModal').modal('hide');
-                    // Recargar la página
-                    location.reload();
-                } else {
-                    alert('Hubo un error al actualizar el Venta');
-                }
-            },
-            error: function() {
-                alert('Hubo un error al actualizar el Venta');
+    $.ajax({
+        url: 'operaciones_venta/editar_venta.php',
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+            let result = JSON.parse(response);
+            if (result.success) {
+                alert('Venta actualizada exitosamente');
+                $('#editModal').modal('hide');
+                location.reload();
+            } else {
+                alert('Error al actualizar la venta: ' + result.error);
             }
-        });
-    }
+        },
+        error: function() {
+            alert('Hubo un error al actualizar la venta');
+        }
+    });
+}
 
     //Borrar Venta
     // Función para mostrar el modal de confirmación de eliminación
