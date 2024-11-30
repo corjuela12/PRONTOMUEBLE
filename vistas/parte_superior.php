@@ -56,7 +56,7 @@
 
 
             <!-- Nav Item - productos-- Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="bi bi-cake2-fill"></i>
@@ -68,7 +68,7 @@
                         <a class="collapse-item" href="agregar_producto.php">Agregar producto</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
             <!-- Nav Item - muebles-- Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMuebles"
@@ -106,7 +106,7 @@
             </li>
 
             <!-- Nav Item - Inventario -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInventario"
                     aria-expanded="true" aria-controls="collapseInventario">
                     <i class="bi bi-person-plus-fill"></i>
@@ -118,10 +118,10 @@
                         <a class="collapse-item" href="consultar_inventario.php">Consultar Inventario</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Nav Item - Empleados -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapse-empleado">
                     <i class="bi bi-person-fill-lock"></i>
                     <span>Empleados</span>
@@ -133,7 +133,7 @@
                             <a class="collapse-item" href="editar_empleado.php">Editar Empleado</a>
                         </div>
                     </div>
-            </li>
+            </li> -->
 
             <!-- Nav Item - venta -->
             <li class="nav-item">
@@ -174,7 +174,7 @@
             </li>
 
             <!-- Nav Item - pedidos -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePedido"
                     aria-expanded="true" aria-controls="collapsePedido">
                     <i class="bi bi-person-plus-fill"></i>
@@ -188,13 +188,13 @@
                         
                     </div>
                 </div>
-            </li>
+            </li> -->
            
 
             <!-- Nav Item - tienda -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse-tienda">
-                    <i class="bi bi-calendar3"></i> <!--Icono del calendario al lado de la palabra tienda-->
+                    <i class="bi bi-calendar3"></i> 
                     <span>Tienda</span>
                 </a>
                     <div id="collapse-tienda" class="collapse" aria-labelledby="heading-tienda" data-parent="#accordionSidebar">
@@ -204,7 +204,7 @@
                             <a class="collapse-item" href="editar_tienda.php">Editar Tienda</a>
                         </div>
                     </div>
-            </li>
+            </li> -->
 
             <li class="nav-item">
                 <a class="nav-link" href="Reportes.php">
@@ -299,7 +299,7 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <!-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Perfil
                                 </a>
@@ -310,9 +310,9 @@
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
-                                </a>
+                                </a> -->
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="login.php" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Salir
                                 </a>
