@@ -1,35 +1,37 @@
 <?php
 include_once "../BD/conexionPDO.php";
 
+// Comprobar si se ha recibido una solicitud de edición
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Obtener los datos del formulario
     $id_venta = $_POST['id_venta'];
     $id_vendedor = $_POST['id_vendedor'];
     $id_cliente = $_POST['id_cliente'];
     $total = $_POST['total'];
     $fecha = $_POST['fecha'];
 
-    // Verificar si la fecha está en el formato correcto
-    $fecha = date('Y-m-d', strtotime($fecha));  // Asegurarse de que la fecha esté en formato 'YYYY-MM-DD'
+    // Consulta de actualización
+    $query = "UPDATE ventas SET id_vendedor = ?, id_cliente = ?, total = ?, fecha = ? WHERE id_venta = ?";
 
-    // Preparar la consulta para actualizar la venta
-    $query = "UPDATE VENTAS SET id_vendedor = :id_vendedor, id_cliente = :id_cliente, total = :total, fecha = :fecha WHERE id_venta = :id_venta";
-    $stmt = $enlace->prepare($query);
-    $stmt->bindParam(':id_vendedor', $id_vendedor, PDO::PARAM_INT);
-    $stmt->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
-    $stmt->bindParam(':total', $total, PDO::PARAM_STR);
-    $stmt->bindParam(':fecha', $fecha, PDO::PARAM_STR);
-    $stmt->bindParam(':id_venta', $id_venta, PDO::PARAM_INT);
+    // Preparar la consulta
+    if ($stmt = $enlace->prepare($query)) {
+        // Vincular los parámetros
+        $stmt->bind_param("iisss", $id_vendedor, $id_cliente, $total, $fecha, $id_venta);
 
-    $response = [];
-    if ($stmt->execute()) {
-        $response['success'] = true;
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => $stmt->error]);
+        }
+
+        // Cerrar la declaración
+        $stmt->close();
     } else {
-        $response['success'] = false;
-        $response['error'] = $stmt->errorInfo()[2];
+        echo json_encode(['success' => false, 'error' => $enlace->error]);
     }
 
-    echo json_encode($response);
-} else {
-    echo json_encode(['error' => 'Método de solicitud no válido']);
+    // Cerrar la conexión
+    $enlace->close();
 }
 ?>

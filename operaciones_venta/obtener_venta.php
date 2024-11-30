@@ -12,7 +12,7 @@ if (isset($_GET['id'])) {
 
     try {
         // Preparar la consulta
-        $query = "SELECT * FROM VENTAS WHERE id_venta = :id_venta";
+        $query = "SELECT id_venta, fecha, id_vendedor, id_cliente, total FROM VENTAS WHERE id_venta = :id_venta";
         $stmt = $enlace->prepare($query);
         $stmt->bindParam(':id_venta', $id_venta, PDO::PARAM_INT);
         $stmt->execute();

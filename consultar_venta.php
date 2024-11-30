@@ -31,10 +31,10 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                 <thead class="text-center">
                                     <tr>
                                         <th>Id Venta</th>
+                                        <th>Fecha Registro</th>
                                         <th>Id Vendedor</th>
                                         <th>Id Cliente</th>
                                         <th>Total</th>
-                                        <th>Fecha Registro</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -44,10 +44,10 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                     ?>
                                     <tr class="text-center">
                                         <td><?php echo $dat['id_venta'] ?></td>
+                                        <td><?php echo $dat['fecha'] ?></td>
                                         <td><?php echo $dat['id_vendedor'] ?></td>
                                         <td><?php echo $dat['id_cliente'] ?></td>
                                         <td><?php echo $dat['total'] ?></td>
-                                        <td><?php echo $dat['fecha'] ?></td>
                                         <td>
                                             <div class="text-center">
                                                 <div class="btn-group">
@@ -161,6 +161,10 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                     <form id="editForm">
                         <input type="hidden" id="edit_id_venta" name="id_venta">
                         <div class="form-group">
+                            <label for="edit_fecha">Fecha:</label>
+                            <input type="date" class="form-control" id="edit_fecha" name="fecha" required>
+                        </div>
+                        <div class="form-group">
                             <label for="edit_id_vendedor">Id Vendedor:</label>
                             <input type="text" class="form-control" id="edit_id_vendedor" name="id_vendedor" required>
                         </div>
@@ -172,10 +176,6 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                             <label for="edit_total">Total:</label>
                             <input type="text" class="form-control" id="edit_total" name="total" required>
                         </div>
-                        <div class="form-group">
-                            <label for="edit_fecha">Fecha:</label>
-                            <input type="date" class="form-control" id="edit_fecha" name="fecha" required>
-                        </div>
                         <button type="button" class="btn btn-primary" onclick="saveEdit()">Guardar Cambios</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     </form>
@@ -185,27 +185,28 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
     </div>
     
     <!-- Modal borrar -->
-    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ¿Estás seguro de que deseas eliminar esta Venta?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <a href="#" id="deleteButton" class="btn btn-danger">Borrar</a>
-                </div>
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas eliminar esta Venta?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="deleteButton" class="btn btn-danger">Borrar</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Modal para mostrar el detalle de la venta -->
+
+<!-- Modal para mostrar el detalle de la venta -->
     <div class="modal fade" id="detalleVentaModal" tabindex="-1" aria-labelledby="detalleVentaLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -247,25 +248,26 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
     // Detalle de la venta
     function showDetalleVenta(id_venta) {
+        console.log("ID de Venta: " + id_venta);  // Agrega esto para verificar
         // Mostrar el modal
         var modal = new bootstrap.Modal(document.getElementById('detalleVentaModal'));
         modal.show();
 
         // Cargar los datos de la venta usando AJAX
         $.ajax({
-            url: 'getDetalleVenta.php', // Archivo PHP que procesará la solicitud
+            url: 'getDetalleVenta.php',
             type: 'GET',
-            data: { id_venta: id_venta }, // Enviar el ID de la venta
+            data: { id_venta: id_venta },
             success: function(response) {
-                // Mostrar la información en el modal
+                console.log(response);  // Agrega esto para ver la respuesta
                 $('#detalleVentaContenido').html(response);
             },
             error: function() {
-                // Mostrar un mensaje de error
                 $('#detalleVentaContenido').html('<p class="text-danger text-center">Error al cargar los datos de la venta.</p>');
             }
         });
     }
+
 
     //Nueva venta
     function saveVenta() {
@@ -356,17 +358,47 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
     });
 }
 
+// Función para mostrar el modal de confirmación y guardar el ID de la venta
+function confirmDelete(id_venta) {
+    // Guardar el ID de la venta en una variable global o en algún atributo del modal
+    ventaToDelete = id_venta;  // Variable global para almacenar el ID de la venta
+    $('#confirmDeleteModal').modal('show');  // Mostrar el modal de confirmación
+}
+
     //Borrar Venta
-    // Función para mostrar el modal de confirmación de eliminación
-    function confirmDelete(idProducto) {
-        // Actualizar el href del botón Borrar en el modal para que apunte al script de borrado con el ID del producto
-        let deleteButton = document.getElementById("deleteButton");
-            deleteButton.onclick = function() {
-            deleteProduct(idProducto);
-        };
-        // Mostrar el modal de confirmación
-        $('#confirmDeleteModal').modal('show');
+    let ventaToDelete = null; // Variable para almacenar la venta que se va a eliminar
+
+    // Mostrar el modal de confirmación de eliminación
+    function showDeleteModal(id_venta) {
+        ventaToDelete = id_venta;  // Almacenar el ID de la venta que se va a eliminar
+        $('#confirmDeleteModal').modal('show');  // Mostrar el modal
     }
+
+    // Eliminar la venta
+    $('#deleteButton').on('click', function() {
+        if (ventaToDelete !== null) {
+            $.ajax({
+                url: 'operaciones_venta/eliminar_venta.php',  // Ruta del archivo PHP para eliminar la venta
+                type: 'POST',
+                data: { id_venta: ventaToDelete },
+                success: function(response) {
+                    let result = JSON.parse(response);
+                    if (result.success) {
+                        alert('Venta eliminada exitosamente');
+                        $('#confirmDeleteModal').modal('hide');
+                        location.reload();  // Recargar la página para actualizar la lista
+                    } else {
+                        alert('Error al eliminar la venta: ' + result.error);
+                    }
+                },
+                error: function() {
+                    alert('Hubo un error al intentar eliminar la venta');
+                }
+            });
+        }
+    });
+
+
     </script>
 
 <?php include('vistas/parte_inferior.php'); ?>
