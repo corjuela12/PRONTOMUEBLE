@@ -116,8 +116,6 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="consultar_inventario.php">Consultar Inventario</a>
-                        
-                        
                     </div>
                 </div>
             </li>
@@ -139,26 +137,40 @@
 
             <!-- Nav Item - venta -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="consultar_venta.php">
                     <i class="bi bi-currency-dollar"></i>
                     <span>Venta</span></a>
             </li>
             
              <!-- Nav Item - Cliente -->
              <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes"
-        aria-expanded="true" aria-controls="collapseClientes">
-        <i class="bi bi-people-fill"></i>
-        <span>Clientes</span>
-    </a>
-    <div id="collapseClientes" class="collapse" aria-labelledby="headingClientes" data-parent="#accordionSidebar">
-    <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="agregar_cliente.php">Agregar Cliente</a>
-        <a class="collapse-item" href="consultar_clientes.php">Consultar Clientes</a>
-        <a class="collapse-item" href="informe_consumos.php">Informe de Consumos</a>
-    </div>
-</div>
-</li>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClientes"
+                    aria-expanded="true" aria-controls="collapseClientes">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Clientes</span>
+                </a>
+                <div id="collapseClientes" class="collapse" aria-labelledby="headingClientes" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="agregar_cliente.php">Agregar Cliente</a>
+                    <a class="collapse-item" href="consultar_clientes.php">Consultar Clientes</a>
+                    <a class="collapse-item" href="informe_consumos.php">Informe de Consumos</a>
+                </div>
+            </div>
+            </li>
+
+             <!-- Nav Item - Vendedor -->
+             <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVendedor"
+                    aria-expanded="true" aria-controls="collapseVendedor">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Vendedor</span>
+                </a>
+                <div id="collapseVendedor" class="collapse" aria-labelledby="headingVendedor" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="consultar_vendedor.php">Consultar Vendedor</a>    
+                </div>
+            </div>
+            </li>
 
             <!-- Nav Item - pedidos -->
             <li class="nav-item">

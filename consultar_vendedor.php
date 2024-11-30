@@ -1,17 +1,16 @@
+<?php require_once "vistas/parte_superior.php"?>
+
 <?php
 include_once  "BD/conexionPDO.php";
 $objeto = new Conexion();
 $conexion = $objeto->Conectar();
 
-$consulta = "SELECT * FROM vendedor";
+$consulta = "SELECT * FROM VENDEDORES";
 $resultado = $conexion->prepare($consulta);
 $resultado->execute();
 $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
-
-<?php require_once "vistas/parte_superior.php"?>
-
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
@@ -33,17 +32,6 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
-                                    <tfoot class="text-center">
-                                        <tr>
-                                            <th>Id Vendedor</th>
-                                            <th>Nombre del vendedor</th>
-                                            <th>Telefono</th>
-                                            <th>Direccion</th>
-                                            <th>Email</th>
-                                            <th>Genero</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
                                         <?php
                                         foreach($data as $dat) {
@@ -260,5 +248,5 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         $('#confirmDeleteModal').modal('show');
     }
     </script>
-</body>
-</html>
+
+<?php include('vistas/parte_inferior.php'); ?>

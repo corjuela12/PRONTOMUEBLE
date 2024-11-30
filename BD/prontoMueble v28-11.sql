@@ -48,7 +48,7 @@ CREATE TABLE VENDEDORES (
     nombre VARCHAR(100) NOT NULL,
     telefono VARCHAR(20),
     direccion VARCHAR(200),
-    email VARCHAR(100)
+    email VARCHAR(100),
     genero VARCHAR(20)
 );
 
@@ -58,6 +58,6 @@ CREATE TABLE VENTAS (
     id_vendedor INT NOT NULL,
     id_cliente INT NOT NULL,
     total DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (id_vendedor) REFERENCES vendedores(id_vendedor) ON DELETE CASCADE,
-    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente) ON DELETE CASCADE --Modificar segun la tabla de clientes, una vez construida
+    FOREIGN KEY (id_vendedor) REFERENCES VENDEDORES(id_vendedor) ON DELETE CASCADE,
+    FOREIGN KEY (id_cliente) REFERENCES CLIENTES(id_cliente) ON DELETE CASCADE
 );

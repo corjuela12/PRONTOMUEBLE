@@ -2,17 +2,17 @@
 // Conexión a la base de datos
 include 'conexion.php';
 
-if (isset($_GET['idVenta'])) {
-    $idVenta = $_GET['idVenta'];
+if (isset($_GET['id_venta'])) {
+    $id_venta = $_GET['id_venta'];
 
     // Consulta a la base de datos para obtener los detalles de la venta
-    $query = "SELECT VENTAS.*, clientes.nombre AS cliente_nombre, VENDEDORES.nombre AS vendedor_nombre 
+    $query = "SELECT VENTAS.*, CLIENTES.nombre AS cliente_nombre, VENDEDORES.nombre AS vendedor_nombre 
               FROM VENTAS 
-              JOIN clientes ON VENTAS.id_cliente = clientes.id_cliente 
+              JOIN CLIENTES ON VENTAS.id_cliente = CLIENTES.id_cliente 
               JOIN VENDEDORES ON VENTAS.id_vendedor = VENDEDORES.id_vendedor 
               WHERE VENTAS.id_venta = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $idVenta);
+    $stmt->bind_param("i", $id_venta);
     $stmt->execute();
     $result = $stmt->get_result();
 
