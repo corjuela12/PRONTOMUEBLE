@@ -1,5 +1,5 @@
 <?php
-include_once  "BD/pruebaMYSQLI.php";
+include_once  "BD/conexionMYSQLI.php";
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") 
@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Sabores & delicias 2024</span>
+                        <span>Copyright &copy; ProntoMueble 2024</span>
                     </div>
                 </div>
             </footer>

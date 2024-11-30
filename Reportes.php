@@ -39,7 +39,7 @@
                 <div class="sidebar-brand-icon">
                     <i class="bi bi-shop"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Sabores & delicias </div>
+                <div class="sidebar-brand-text mx-3">ProntoMueble </div>
             </a>
 
             <!-- Divider -->
@@ -146,7 +146,7 @@
             <!-- Sidebar Message -->
             <div class="sidebar-card d-none d-lg-flex">
                 <img class="sidebar-card-illustration mb-2" src="img/shop.svg" alt="...">
-                <p class="text-center mb-2"><strong>Sabores & delicias</strong>, Frescura y sabor en cada empaque</p>
+                <p class="text-center mb-2"><strong>ProntoMueble</strong>, Frescura y sabor en cada empaque</p>
                 
             </div>
 
@@ -278,7 +278,7 @@
                                         $servername = "localhost";
                                         $username = "root";
                                         $password = "";
-                                        $database = "saboresydelicias";
+                                        $database = "pronto_mueble";
                                         $conecta = new mysqli($servername, $username, $password, $database);
                     
                                         // Verificar conexión
@@ -398,7 +398,7 @@
                             $servername = "localhost";
                             $username = "root";
                             $password = "";
-                            $database = "saboresydelicias";
+                            $database = "pronto_mueble";
                             $conecta = new mysqli($servername, $username, $password, $database);
 
                             // Verificar conexión
@@ -440,7 +440,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Sabores & delicias 2024</span>
+                        <span>Copyright &copy; ProntoMueble 2024</span>
                     </div>
                 </div>
             </footer>
