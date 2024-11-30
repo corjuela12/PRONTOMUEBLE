@@ -80,7 +80,9 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="GestionarMuebles.php">Gestionar Muebles</a>
-                        <a class="collapse-item" href="">Color de Mueble</a>    
+                        <a class="collapse-item" href="">Color de Mueble</a>  
+                        <a class="collapse-item" href="">Tipo de Mueble</a> 
+                        <a class="collapse-item" href="">Material del Mueble</a>  
                     </div>
                 </div>
             </li>
