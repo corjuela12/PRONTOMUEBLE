@@ -12,6 +12,15 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
                 <!-- Begin Page Content -->
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">            
+                        <button id="btnNuevo" type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal">Nuevo Vendedor</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
@@ -103,6 +112,51 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
+    <!-- Modal Crear -->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Crear Nuevo Vendedor</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="createForm">
+                        <div class="form-group">
+                            <label for="create_nombre">Nombre del vendedor:</label>
+                            <input type="text" class="form-control" id="create_nombre" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="create_telefono">Teléfono:</label>
+                            <input type="text" class="form-control" id="create_telefono" name="telefono" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="create_direccion">Dirección:</label>
+                            <input type="text" class="form-control" id="create_direccion" name="direccion" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="create_email">Email:</label>
+                            <input type="email" class="form-control" id="create_email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="create_genero">Género:</label>
+                            <select class="form-control" id="create_genero" name="genero" required>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="saveCreate()">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Modal editar -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -183,7 +237,31 @@ $data=$resultado->fetchAll(PDO::FETCH_ASSOC);
     <script src="js/demo/datatables-demo.js"></script>
 
     <script>
-    
+    function saveCreate() {
+        let formData = $('#createForm').serialize();
+
+        $.ajax({
+            url: 'operaciones_vendedor/crear_vendedor.php', // Cambia por tu ruta correspondiente
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                let result = JSON.parse(response);
+                if (result.success) {
+                    alert('Vendedor creado exitosamente');
+                    // Cerrar el modal
+                    $('#createModal').modal('hide');
+                    // Recargar la página
+                    location.reload();
+                } else {
+                    alert('Hubo un error al crear el vendedor');
+                }
+            },
+            error: function() {
+                alert('Hubo un error al procesar la solicitud');
+            }
+        });
+    }
+
      // EDITAR
      function showEditModal(idvendedor) {
         $.ajax({
