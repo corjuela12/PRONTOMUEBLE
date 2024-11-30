@@ -7,7 +7,7 @@ class conexion
             define('SERVIDOR', 'localhost');
         }
         if (!defined('NOMBRE_BD')) {
-            define('NOMBRE_BD', 'saboresydelicias');
+            define('NOMBRE_BD', 'pronto_mueble');
         }
         if (!defined('USUARIO')) {
             define('USUARIO', 'root');

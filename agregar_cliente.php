@@ -1,41 +1,56 @@
 <?php
+// Datos de conexión a la base de datos
+$servername = "localhost";
+$username = "root";  // Cambia esto si usas otro nombre de usuario
+$password = "";      // Cambia esto si tienes contraseña en tu base de datos
+$dbname = "pronto_mueble";  // Nombre de tu base de datos
 
+// Crear conexión a la base de datos
+$conn = new mysqli($servername, $username, $password, $dbname);
 
+// Comprobar conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Comprobar si el formulario ha sido enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "saboresydelicias";
-
-    // Crear conexión
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Verificar conexión
-    if ($conn->connect_error) {
-        die("Conexión fallida: " . $conn->connect_error);
-    }
-
+    // Recibir los datos del formulario
     $nombre = $_POST["nombre"];
-    $apellido = $_POST["apellido"];
+    $identificacion = $_POST["identificacion"];
+    $direccion = $_POST["direccion"];
     $correo = $_POST["correo"];
-    $fecha_registro = $_POST["fecha_registro"];
     $telefono = $_POST["telefono"];
-    $cedula = $_POST["cedula"];
-    $area = $_POST["area"];
-    $empleado_id_empleado = $_POST["empleado_id_empleado"];
+    $fecha_registro = date("Y-m-d"); // Fecha actual
 
     // Validar datos antes de insertar
-    if (!empty($nombre) && !empty($apellido) && !empty($correo) && !empty($fecha_registro) && !empty($telefono) && !empty($cedula) && !empty($area) && !empty($empleado_id_empleado)) {
-        $sql = "INSERT INTO cliente (nombre, apellido, correo, fecha_registro, telefono, cedula, area, empleado_id_empleado) VALUES ('$nombre', '$apellido', '$correo', '$fecha_registro', '$telefono', '$cedula', '$area', '$empleado_id_empleado')";
+    if (!empty($nombre) && !empty($identificacion) && !empty($direccion) && !empty($correo) && !empty($telefono)) {
+        // Sentencia preparada para insertar datos en la tabla 'cliente'
+        $sql = "INSERT INTO cliente (nombre, identificacion, direccion, correo, telefono, fecha_registro) 
+                VALUES (?, ?, ?, ?, ?, ?)";
+        
+        // Preparar la sentencia
+        if ($stmt = $conn->prepare($sql)) {
+            // Vincular parámetros (s para string)
+            $stmt->bind_param("ssssss", $nombre, $identificacion, $direccion, $correo, $telefono, $fecha_registro);
+            
+            // Ejecutar la consulta
+            if ($stmt->execute()) {
+                echo "Nuevo cliente agregado correctamente";
+            } else {
+                echo "Error al agregar cliente: " . $stmt->error;
+            }
 
-        if ($conn->query($sql) === TRUE) {
-            echo "Nuevo cliente agregado correctamente";
+            // Cerrar la sentencia
+            $stmt->close();
         } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+            echo "Error en la preparación de la consulta: " . $conn->error;
         }
     } else {
         echo "Todos los campos son obligatorios.";
     }
 
+    // Cerrar la conexión
     $conn->close();
 }
 ?>
@@ -58,32 +73,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" class="form-control" id="nombre" name="nombre" required>
             </div>
             <div class="form-group">
-                <label for="apellido">Apellido:</label>
-                <input type="text" class="form-control" id="apellido" name="apellido" required>
+                <label for="identificacion">Identificación:</label>
+                <input type="text" class="form-control" id="identificacion" name="identificacion" required>
             </div>
             <div class="form-group">
-                <label for="correo">Correo:</label>
-                <input type="email" class="form-control" id="   correo" name="correo" required>
+                <label for="direccion">Dirección:</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" required>
             </div>
             <div class="form-group">
-                <label for="fecha_registro">Fecha de Registro:</label>
-                <input type="date" class="form-control" id="fecha_registro" name="fecha_registro" required>
+                <label for="correo">Correo Electrónico:</label>
+                <input type="email" class="form-control" id="correo" name="correo" required>
             </div>
             <div class="form-group">
                 <label for="telefono">Teléfono:</label>
                 <input type="text" class="form-control" id="telefono" name="telefono" required>
-            </div>
-            <div class="form-group">
-                <label for="cedula">Cédula:</label>
-                <input type="text" class="form-control" id="cedula" name="cedula" required>
-            </div>
-            <div class="form-group">
-                <label for="area">Área:</label>
-                <input type="text" class="form-control" id="area" name="area" required>
-            </div>
-            <div class="form-group">
-                <label for="empleado_id_empleado">ID Empleado:</label>
-                <input type="text" class="form-control" id="empleado_id_empleado" name="empleado_id_empleado" required>
             </div>
             <button type="submit" class="btn btn-primary">Agregar Cliente</button>
         </form>
