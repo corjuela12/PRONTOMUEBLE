@@ -80,9 +80,9 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="GestionarMuebles.php">Gestionar Muebles</a>
-                        <a class="collapse-item" href="">Color de Mueble</a>  
+                        <!-- <a class="collapse-item" href="">Color de Mueble</a>  
                         <a class="collapse-item" href="">Tipo de Mueble</a> 
-                        <a class="collapse-item" href="">Material del Mueble</a>  
+                        <a class="collapse-item" href="">Material del Mueble</a>   -->
                     </div>
                 </div>
             </li>
@@ -153,7 +153,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="agregar_cliente.php">Agregar Cliente</a>
                     <a class="collapse-item" href="consultar_clientes.php">Consultar Clientes</a>
-                    <a class="collapse-item" href="informe_consumos.php">Informe de Consumos</a>
+                    <!-- <a class="collapse-item" href="informe_consumos.php">Informe de Consumos</a> -->
                 </div>
             </div>
             </li>
@@ -167,7 +167,7 @@
                 </a>
                 <div id="collapseVendedor" class="collapse" aria-labelledby="headingVendedor" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="crear_empleado.php">Agregar Vendedor</a>
+                <!-- <a class="collapse-item" href="crear_empleado.php">Agregar Vendedor</a> -->
                     <a class="collapse-item" href="consultar_vendedor.php">Consultar Vendedor</a>    
                 </div>
             </div>
